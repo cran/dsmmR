@@ -52,17 +52,17 @@ However, this will lead to better estimations through \code{fit_dsmm()}.
 \value{
 An array with dimensions of
 \eqn{s \times s \times k_{max} \times (n + 1)}, giving the
-value of the Drifting semi-Markov kernel \eqn{q_{\frac{t}{n}}(u,v,l)} for
+value of the drifting semi-Markov kernel \eqn{q_{\frac{t}{n}}(u,v,l)} for
 the corresponding \eqn{(u,v,l,t)}. If any of \eqn{u,v,l} or \eqn{t} were
 specified, their dimension in the array becomes 1.
 }
 \description{
-This is a generic method that computes and returns the Drifting
+This is a generic method that computes and returns the drifting
 semi-Markov kernel as a numerical array of dimensions
 \eqn{s \times s \times k_{max} \times (n + 1)}.
 }
 \details{
-The Drifting semi-Markov kernel is given as the probability that,
+The drifting semi-Markov kernel is given as the probability that,
 given at the instance \eqn{t} the previous state
 is \eqn{u}, the next state state \eqn{v} will be reached
 with a sojourn time of \eqn{l}:
@@ -73,22 +73,22 @@ Markov chain \eqn{(J_{t})_{t\in \{0,\dots,n\}}} minus the last state,
 \eqn{X_{t} = S_{t}-S_{t-1}} is the sojourn time of the state \eqn{J_{t-1}}.
 Specifically, it is given as the sum of a linear combination:
 \deqn{q_{\frac{t}{n}}(u,v,l)=
-     \sum_{i = 0}^{d}A_{i}(t)q_{\frac{i}{d}}(u,v,l),}
+     \sum_{i = 0}^{d}A_{i}(t)\ q_{\frac{i}{d}}(u,v,l),}
 where \eqn{A_i, i = 0, \dots, d} are \eqn{d + 1} polynomials with degree
 \eqn{d} that satisfy certain conditions (see \link{dsmmR}) and
 \eqn{q_{\frac{i}{d}}(u,v,l), i = 0, \dots, d}
 are \eqn{d + 1} semi-Markov kernels.
 Three possible model specifications are described below.
 We will use the exponentials \eqn{(1), (2), (3)} to distinguish between
-the Drifting semi-Markov kernel \eqn{q_\frac{t}{n}} and the
+the drifting semi-Markov kernel \eqn{q_\frac{t}{n}} and the
 semi-Markov kernels \eqn{q_\frac{i}{d}} used in
 Model 1, Model 2 and Model 3.
 
 \strong{\emph{Model 1}}
 
 In this case, both \eqn{p} and \eqn{f} are "drifting" between \eqn{d + 1}
-fixed points of the model, hence the "drifting" in Drifting semi-Markov
-Models. Therefore, the semi-Markov kernels \eqn{q_{\frac{i}{d}}^{\ (1)}} are
+fixed points of the model, hence the "drifting" in drifting semi-Markov
+models. Therefore, the semi-Markov kernels \eqn{q_{\frac{i}{d}}^{\ (1)}} are
 equal to:
 
 \deqn{q_{\frac{i}{d}}^{\ (1)}(u,v,l) =
@@ -99,11 +99,11 @@ matrices \eqn{p_{\frac{i}{d}}(u,v)}, and \eqn{d + 1} sojourn time
 distributions \eqn{f_{\frac{i}{d}}(u,v,l)}, where \eqn{d} is the
 polynomial degree.
 
-Thus, the Drifting semi-Markov kernel will be equal to:
+Thus, the drifting semi-Markov kernel will be equal to:
 
 \deqn{q_{\frac{t}{n}}^{\ (1)}(u,v,l) =
-\sum_{i = 0}^{d} A_i(t)q_{\frac{i}{d}}^{\ (1)}(u,v,l) =
-\sum_{i = 0}^{d} A_i(t)p_{\frac{i}{d}}(u,v)f_{\frac{i}{d}}(u,v,l)
+\sum_{i = 0}^{d} A_i(t)\ q_{\frac{i}{d}}^{\ (1)}(u,v,l) =
+\sum_{i = 0}^{d} A_i(t)\ p_{\frac{i}{d}}(u,v)f_{\frac{i}{d}}(u,v,l)
 }
 
 
@@ -114,10 +114,10 @@ Therefore, the semi-Markov kernels \eqn{q_{\frac{i}{d}}^{\ (2)}} are
 equal to:
 \deqn{q_{\frac{i}{d}}^{\ (2)}(u,v,l)={p_{\frac{i}{d}}(u,v)}{f(u,v,l)}.}
 
-Thus, the Drifting semi-Markov kernel will be equal to:
+Thus, the drifting semi-Markov kernel will be equal to:
 \deqn{q_{\frac{t}{n}}^{\ (2)}(u,v,l) =
-\sum_{i = 0}^{d} A_i(t) q_{\frac{i}{d}}^{\ (2)}(u,v,l) =
-\sum_{i = 0}^{d} A_i(t) p_{\frac{i}{d}}(u,v)f(u,v,l)
+\sum_{i = 0}^{d} A_i(t)\ q_{\frac{i}{d}}^{\ (2)}(u,v,l) =
+\sum_{i = 0}^{d} A_i(t)\ p_{\frac{i}{d}}(u,v)f(u,v,l)
 }
 
 
@@ -129,10 +129,10 @@ Therefore, the semi-Markov kernels \eqn{q_{\frac{i}{d}}^{\ (3)}}
 are now described as:
 \deqn{q_{\frac{i}{d}}^{\ (3)}(u,v,l)={p(u,v)}{f_{\frac{i}{d}}(u,v,l)}.}
 
-Thus, the Drifting semi-Markov kernel will be equal to:
+Thus, the drifting semi-Markov kernel will be equal to:
 \deqn{q_{\frac{t}{n}}^{\ (3)}(u,v,l) =
-\sum_{i = 0}^{d} A_i(t) q_{\frac{i}{d}}^{\ (3)}(u,v,l) =
-\sum_{i = 0}^{d} A_i(t) p(u,v)f_{\frac{i}{d}}(u,v,l)
+\sum_{i = 0}^{d} A_i(t)\ q_{\frac{i}{d}}^{\ (3)}(u,v,l) =
+\sum_{i = 0}^{d} A_i(t)\ p(u,v)f_{\frac{i}{d}}(u,v,l)
 }
 }
 \examples{
@@ -147,14 +147,12 @@ obj_model_2 <- fit_dsmm(
     p_is_drifting = TRUE
 )
 
-
 # Get the kernel.
 kernel_model_2 <- get_kernel(obj_model_2)
 cat(paste0("If no further arguments are made, kernel has dimensions ",
            "for all u, v, l, t:\n",
            "(s, s, k_max, n + 1) = (",
            paste(dim(kernel_model_2), collapse = ", "), ")"))
-
 
 # Specifying `t`.
 kernel_model_2_t <- get_kernel(obj_model_2, t = 100)
@@ -163,14 +161,12 @@ cat(paste0("If we specify t, the kernel has dimensions for ",
            "all the remaining u, v, l:\n(s, s, k_max) = (",
            paste(dim(kernel_model_2_t), collapse = ", "), ")"))
 
-
 # Specifying `t` and `u`.
 kernel_model_2_tu <- get_kernel(obj_model_2, t = 2, u = "Aigio")
 # kernel_model_2_tu["Aigio", , , t = 2]
 cat(paste0("If we specify t and u, the kernel has dimensions for ",
            "all the remaining v, l:\n(s, k_max) = (",
            paste(dim(kernel_model_2_tu), collapse = ", "), ")"))
-
 
 # Specifying `t`, `u` and `v`.
 kernel_model_2_tuv <- get_kernel(obj_model_2, t = 3,
@@ -188,5 +184,5 @@ For the objects required to calculate this kernel:
 
 For sequence simulation through this kernel: \link{simulate.dsmm}.
 
-For the theoretical background of Drifting semi-Markov models: \link{dsmmR}.
+For the theoretical background of drifting semi-Markov models: \link{dsmmR}.
 }

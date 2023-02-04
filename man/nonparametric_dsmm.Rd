@@ -20,7 +20,7 @@ nonparametric_dsmm(
 }
 \arguments{
 \item{model_size}{Positive integer that represents the size of
-the Drifting semi-Markov model \eqn{n}. It is equal to the length of a
+the drifting semi-Markov model \eqn{n}. It is equal to the length of a
 theoretical embedded Markov chain
 \eqn{(J_{t})_{t\in \{0,\dots,n\}}}, without the last state.}
 
@@ -32,10 +32,10 @@ represents the initial distribution for each state in the state
 space \eqn{E}.}
 
 \item{degree}{Positive integer that represents the polynomial degree \eqn{d}
-for the Drifting semi-Markov model.}
+for the drifting semi-Markov model.}
 
 \item{k_max}{Positive integer that represents the maximum sojourn time of
-choice, for the Drifting semi-Markov model.}
+choice, for the drifting semi-Markov model.}
 
 \item{f_is_drifting}{Logical. Specifies if \eqn{f} is drifting or not.}
 
@@ -82,7 +82,7 @@ passing down from the arguments:
     defined \eqn{f} sojourn time distribution is drifting or not.
 }
 \item \code{initial_dist} : Numerical vector. Passing down from the arguments.
-It contains the initial distribution of the Drifting semi-Markov model.
+It contains the initial distribution of the drifting semi-Markov model.
 \item \code{states} : Character vector. Passing down from the arguments.
 It contains the state space \eqn{E}.
 \item \code{s} : Positive integer. It contains the number of states in the
@@ -91,10 +91,10 @@ state space, \eqn{s = |E|}, which is given in the attribute \code{states}.
 It contains the polynomial degree \eqn{d} considered for the drifting of
 the model.
 \item \code{k_max} : Numerical value. Passing down from the arguments.
-It contains the maximum sojourn time, for the Drifting semi-Markov
+It contains the maximum sojourn time, for the drifting semi-Markov
 model.
 \item \code{model_size} : Positive integer. Passing down from the arguments.
-It contains the size of the Drifting semi-Markov model \eqn{n}, which
+It contains the size of the drifting semi-Markov model \eqn{n}, which
 represents the length of the embedded Markov chain
 \eqn{(J_{t})_{t\in \{0,\dots,n\}}}, without the last state.
 \item \code{f_is_drifting} : Logical. Passing down from the arguments.
@@ -116,7 +116,7 @@ Specifies if \eqn{p} is drifting or not.
 }
 }
 \description{
-Creates a non-parametric model specification for a Drifting
+Creates a non-parametric model specification for a drifting
 semi-Markov model. Returns an object of class
 \code{(dsmm_nonparametric, dsmm)}.
 }
@@ -300,10 +300,6 @@ p_dist_model_2 <- array(c(p_dist_1, p_dist_2, p_dist_3),
 f_dist_model_2 <- f_dist_2
 
 
-
-
-
-
 # ---------------------------------------------------------------------------
 # Non-Parametric object for Model 2.
 # ---------------------------------------------------------------------------
@@ -328,16 +324,20 @@ p_drift
 f_notdrift <- obj_nonpar_model_2$dist$f_notdrift
 f_notdrift
 
+
 # ---------------------------------------------------------------------------
 # Defining Model 3 - f is drifting, p is not drifting.
 # ---------------------------------------------------------------------------
 
+
 # `p_dist` has dimensions of: (s, s, d + 1).
 p_dist_model_3 <- p_dist_3
+
 
 # `f_dist` has the same dimensions as in Model 1: (s, s, d + 1).
 f_dist_model_3 <- array(c(f_dist_1, f_dist_2, f_dist_3),
                         dim = c(s, s, k_max, d + 1))
+
 
 # ---------------------------------------------------------------------------
 # Non-Parametric object for Model 3.
@@ -358,8 +358,6 @@ obj_nonpar_model_3 <- nonparametric_dsmm(
 # p distribution matrix.
 p_notdrift <- obj_nonpar_model_3$dist$p_notdrift
 p_notdrift
-
-
 
 # f distribution array.
 f_drift <- obj_nonpar_model_3$dist$f_drift
@@ -391,8 +389,8 @@ Methodology and Computing in Applied Probability, 21(4), 1407-1429.
 \seealso{
 Methods applied to this object: \link{simulate.dsmm}, \link{get_kernel}.
 
-For the parametric Drifting semi-Markov model specification:
+For the parametric drifting semi-Markov model specification:
 \link{parametric_dsmm}.
 
-For the theoretical background of Drifting semi-Markov models: \link{dsmmR}.
+For the theoretical background of drifting semi-Markov models: \link{dsmmR}.
 }

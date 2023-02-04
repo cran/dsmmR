@@ -20,7 +20,7 @@ parametric_dsmm(
 }
 \arguments{
 \item{model_size}{Positive integer that represents the size of
-the Drifting semi-Markov model \eqn{n}. It is equal to the length of a
+the drifting semi-Markov model \eqn{n}. It is equal to the length of a
 theoretical embedded Markov chain
 \eqn{(J_{t})_{t\in \{0,\dots,n\}}}, without the last state.}
 
@@ -32,7 +32,7 @@ represents the initial distribution for each state in the state space
 \eqn{E}.}
 
 \item{degree}{Positive integer that represents the polynomial degree \eqn{d}
-for the Drifting semi-Markov model.}
+for the drifting semi-Markov model.}
 
 \item{f_is_drifting}{Logical. Specifies if \eqn{f} is drifting or not.}
 
@@ -100,7 +100,7 @@ It has the following attributes:
     depending on whether \eqn{f} is drifting or not.
   }
 \item \code{initial_dist} : Numerical vector. Passing down from the arguments.
-It contains the initial distribution of the Drifting semi-Markov model.
+It contains the initial distribution of the drifting semi-Markov model.
 \item \code{states} : Character vector. Passing down from the arguments.
 It contains the state space \eqn{E}.
 \item \code{s} : Positive integer. It contains the number of states in the
@@ -109,7 +109,7 @@ state space, \eqn{s = |E|}, which is given in the attribute \code{states}.
 It contains the polynomial degree \eqn{d} considered for the drifting of
 the model.
 \item \code{model_size} : Positive integer. Passing down from the arguments.
-It contains the size of the Drifting semi-Markov model \eqn{n}, which
+It contains the size of the drifting semi-Markov model \eqn{n}, which
 represents the length of the embedded Markov chain
 \eqn{(J_{t})_{t\in \{0,\dots,n\}}}, without the last state.
 \item \code{f_is_drifting} : Logical. Passing down from the arguments.
@@ -124,14 +124,14 @@ Specifies if \eqn{p} is drifting or not.
         \item \code{"Model_3"} : \eqn{f} is drifting and \eqn{p}
               is not drifting.
     }
-\item \code{A_i} : Numerical Matrix. Represents the polynomials
+\item \code{A_i} : Numerical matrix. Represents the polynomials
     \eqn{A_i(t)} with degree \eqn{d} that are used for solving
     the system \eqn{MJ = P}. Used for the methods defined for the
     object. Not printed when viewing the object.
 }
 }
 \description{
-Creates a parametric model specification for a Drifting
+Creates a parametric model specification for a drifting
 semi-Markov model. Returns an object of class
 \code{(dsmm_parametric, dsmm)}.
 }
@@ -194,7 +194,7 @@ For the parametric case, we explicitly define:
 \strong{Sojourn time distributions}
 
 In this package, the available distributions for the modeling of the
-conditional sojourn times, of the Drifting semi-Markov model, used through
+conditional sojourn times, of the drifting semi-Markov model, used through
 the argument \code{f_dist}, are the following:
 \itemize{
 \item Uniform \eqn{(n)}:
@@ -263,8 +263,7 @@ we require two parameters. It's for this reason that the attribute
 if \eqn{f} \strong{is drifting}.
 }
 \examples{
-# Setup.
-# We can define states in a flexible way, including spaces.
+# We can also define states in a flexible way, including spaces.
 states <- c("Dollar $", " /1'2'3/ ", " Z E T A ", "O_M_E_G_A")
 s <- length(states)
 d <- 1
@@ -298,7 +297,6 @@ p_dist_2 <- matrix(c(0,   0.3, 0.6, 0.1,
 p_dist_model_1 <- array(c(p_dist_1, p_dist_2), dim = c(s, s, d + 1))
 
 # `f_dist` has dimensions of: (s, s, d + 1).
-
 # First matrix.
 f_dist_1 <- matrix(c(NA,         "unif", "dweibull", "nbinom",
                      "geom",      NA,    "pois",     "dweibull",
@@ -418,6 +416,7 @@ f_dist_pars_model_2 <- array(c(f_dist_pars_1_model_2,
                                f_dist_pars_2_model_2),
                              dim = c(s, s, 2))
 
+
 # ---------------------------------------------------------------------------
 # Parametric object for Model 2.
 # ---------------------------------------------------------------------------
@@ -498,6 +497,7 @@ f_dist_pars_drift
 # Parametric estimation using methods corresponding to an object
 #     which inherits from the class `dsmm_parametric`.
 # ===========================================================================
+
 ### Comments
 ### 1.  Using a larger `klim` and a larger `model_size` will increase the
 ###     accuracy of the model, with the need of larger memory requirements
@@ -543,7 +543,7 @@ f_dist_model_1 <- array(f_dist_1, dim = c(s, s, d + 1))
 # `f_dist_pars` has dimensions of: (s, s, 2, d + 1).
 # First array of coefficients, corresponding to `f_dist_1`.
 # First matrix.
-f_dist_1_pars_1 <- matrix(c(NA,  7, 0.4, 4,
+f_dist_1_pars_1 <- matrix(c(NA,  7,  0.4, 4,
                             0.7, NA, 5,   0.6,
                             0.2, 3,  NA,  0.6,
                             4,   4,  0.4, NA),
@@ -598,7 +598,7 @@ cat("The object has class of (",
 # Generating a sequence from the parametric object.
 # ---------------------------------------------------------------------------
 
-# A larger klim will increase accuracy and also the computation cost.
+# A larger klim will lead to an increase in accuracy.
 klim <- 20
 sim_seq <- simulate(obj_par_model_1, klim = klim, seed = 1)
 
@@ -643,8 +643,8 @@ IEEE Transactions on Reliability, R-24, 300-301.
 \seealso{
 Methods applied to this object: \link{simulate.dsmm}, \link{get_kernel}.
 
-For the non-parametric Drifting semi-Markov model specification:
+For the non-parametric drifting semi-Markov model specification:
 \link{nonparametric_dsmm}.
 
-For the theoretical background of Drifting semi-Markov models: \link{dsmmR}.
+For the theoretical background of drifting semi-Markov models: \link{dsmmR}.
 }

@@ -126,7 +126,7 @@ valid_sequence <- function(sequence, s) {
     # '''
     if (!is.character(sequence)){
         stop("\nThe `sequence` argument should be a character vector.")
-    } else if (length(unique(sequence)) < s) {
+    } else if (!missing(s) && length(unique(sequence)) < s) {
         # check for (very) short sequence.
         stop("\nThe `sequence` argument should have more than s = ",
              s, " values.")
@@ -201,18 +201,18 @@ valid_states <- function(states) {
     if (!is.character(states) ||
         !is_vector(states) ||
         !all_equal(states, unique(states))) {
-        stop("\nThe `states` of the State Space should be a character vector",
+        stop("\nThe `states` of the state space should be a character vector",
              " of unique values.")
     } else if (length(states) == 1L) {
         # Check for a single state.
-        stop("\nState Space `states` should have more than one states.")
+        stop("\nState space `states` should have more than one states.")
     } else if (!all_equal(states, unique(states))) {
         # Check for uniqueness of states.
         stop("\nThe state space given in `states` contains duplicate values.")
     } else if(min(prob <- (sapply(strsplit(
         x = gsub(" ", "", states), split = ""), length))) == 0) {
         # Check for a state equal to an empty string "" or `character(0)`.
-        stop("\nState Space `states` includes a state without a given name,",
+        stop("\nState space `states` includes a state without a given name, ",
              "at position ", which(prob == 0))
     }
     TRUE
@@ -265,7 +265,7 @@ valid_degree <- function(degree, model_size) {
 
 valid_initial_dist <- function(initial_dist, s) {
     # '''
-    #   This functions checks for correct behavior of the `initial_dist`
+    #   This functions checks for correct behaviour of the `initial_dist`
     #   parameter.
     # '''
     if (!is_double_vector(initial_dist)) {
@@ -306,10 +306,9 @@ valid_model <- function(p_is_drifting, f_is_drifting) {
     # '''
     if (!p_is_drifting && !f_is_drifting) {
         # Neither p or f are drifting.
-        stop("\nAt least p OR f should be drifting to use a Drifting",
-             "semi-Markov Model",
-             " for the estimation. Otherwise, a semi-Markov Model",
-             "should be used.")
+        stop("\nAt least p or f should be drifting to use a drifting ",
+             "semi-Markov model for the estimation. Otherwise, ",
+             "a semi-Markov model should be used.")
     }
     TRUE
 }
@@ -358,7 +357,7 @@ valid_p_dist <- function(p_dist, s, degree, p_is_drifting, states) {
                  paste0(p_dist[non_prob], collapse = ", "))
         } else if (!all_equal((dimension <- dim(p_dist)),
                               c(s, s, D))) {
-            stop("\nSince `p_is_drifting` = TRUE, `p_dist` should be an",
+            stop("\nSince `p_is_drifting` = TRUE, `p_dist` should be an ",
                  "array with dimensions:\n(s, s, degree + 1) = (",
                  paste(c(s, s, D), collapse = ', '),
                  ") when it has dimensions of: (",
@@ -428,7 +427,7 @@ valid_p_dist <- function(p_dist, s, degree, p_is_drifting, states) {
                                      function(u) !all_equal(u, 1))
             stop("\nFor the transition probability matrice contained in ",
                  "`p_dist`the probabilities of transistioning from ",
-                 "previous state `u` over all the possible next states",
+                 "previous state `u` over all the possible next states ",
                  "`v` should be equal to 1. \nWhat follows are ",
                  "the states  that violate this principle.\n",
                  paste("\n", states[logical_vector]))
@@ -487,8 +486,8 @@ valid_fdist_nonparametric <- function(f_dist, states, s, degree,
             diffs <- sapply(f_drift_l_sum - no_diag, function(diff)
                 !all_equal_numeric(diff, 0))
             stop('\nThe sums over l of `f_dist` are not equal to 1 for the ',
-                'following cases of u, v and array:\n',
-                paste0(array_names[diffs], collapse = '\n'))
+                 'following cases of u, v and array:\n',
+                 paste0(array_names[diffs], collapse = '\n'))
         } else if (any(same <- sapply(1:D, function(d1) {
             sapply(1:D, function(d2) {
                 if (d1 != d2) {
@@ -608,7 +607,7 @@ valid_fdist_parametric <- function(fdist, params, degree, s, f_is_drifting,
         stop("\n`f_dist_parameters` should be a array with double ",
              "and NA values.")
     }  else if (all(is.na(params))) {
-        stop("\n`f_dist_parameters` should not have all if its values",
+        stop("\n`f_dist_parameters` should not have all if its values ",
              "equal to NA.")
     }
     # Checking parameters
@@ -715,8 +714,7 @@ valid_parameters <- function(row, i, j, d, degree, states) {
     } else if (distr == "geom") {
         if (is.na(p1) || !(is.na(p2))) {
             stop("\nFor Geometric distributions, the first parameter must",
-                 " be specified ",
-                 "and the second parameter must be NA.", msg)
+                 " be specified and the second parameter must be NA.", msg)
         } else if (p1 <= 0 || p1 >= 1) {
             stop("\nFor Geometric distributions, the value of the parameter",
                  " must be between [0, 1] (probability of success).", msg)
@@ -907,8 +905,7 @@ get_1_uvl <- function(id_seq, l, n, X, k_max, id_states, s) {
     seq_uvl <- paste(id_seq[-l], c(id_seq[-1]), X[-l])
     Es <- rep(id_states, s)
     pEs <- paste(Es, sort(Es))
-    possible_uvl_states <- paste(rep(pEs, k_max),
-                                 sort(rep(1:k_max, s*s)))
+    possible_uvl_states <- paste(rep(pEs, k_max), sort(rep(1:k_max, s*s)))
     zero_v <- rep(0, n)
     vector_1_uvl <- sapply(X = possible_uvl_states,
                            FUN = function(uvl, seq_uvl, zero_v) {
@@ -1009,14 +1006,14 @@ get_valid_kernel <- function(Ji, Ai, s, n, k_max, states) {
 #' number generator (see more in \code{\link[base:set.seed]{set.seed}}).
 #'
 #' @seealso
-#' For the simulation of a sequence with a Drifting semi-Markov kernel:
+#' For the simulation of a sequence with a drifting semi-Markov kernel:
 #' \link{simulate.dsmm}.
 #'
 #' The original function: \code{\link[base:sample]{sample}}.
 #'
 #' About random number generation in R: \code{\link[base:RNG]{RNG}}.
 #'
-#' For the theoretical background of Drifting semi-Markov models: \link{dsmmR}.
+#' For the theoretical background of drifting semi-Markov models: \link{dsmmR}.
 #'
 #' @return A character sequence of length \code{len}.
 #' @export

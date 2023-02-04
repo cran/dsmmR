@@ -12,7 +12,7 @@ parametric_estimation <- function(lprobs, dist, kmax, i, j, d, degree, states) {
     #     'dweibull').
     #   * `kmax` is the maximum sojourn time of the sequence.
     #   * `i`, `j`, `d` are values corresponding to the current u, v and
-    #      sojourn time distribution (f_(i/d)).
+    #      sojourn time distribution f_(i/d).
     #   * `degree` is the polynomial degree of the drift.
     # '''
     if (dist == 'unif') {
@@ -20,8 +20,8 @@ parametric_estimation <- function(lprobs, dist, kmax, i, j, d, degree, states) {
         ratio <- c(lprobs[-1], NA) / lprobs
         similar_consec_ratios <- which(ratio <= posprobs & ratio >= 1/posprobs)
         theta <- max(sapply(split(similar_consec_ratios,
-                              cumsum(c(1, diff(similar_consec_ratios) != 1))),
-                        length)) + 1
+                                  cumsum(c(1, diff(similar_consec_ratios) != 1))),
+                            length)) + 1
         return(c(theta, NA))
     } else if (dist == 'pois') {
         theta <- sum(0:(kmax - 1) * lprobs)

@@ -39,12 +39,12 @@ rand_dna_seq2 <- create_sequence(
 table(rand_dna_seq2)
 }
 \seealso{
-For the simulation of a sequence with a Drifting semi-Markov kernel:
+For the simulation of a sequence with a drifting semi-Markov kernel:
 \link{simulate.dsmm}.
 
 The original function: \code{\link[base:sample]{sample}}.
 
 About random number generation in R: \code{\link[base:RNG]{RNG}}.
 
-For the theoretical background of Drifting semi-Markov models: \link{dsmmR}.
+For the theoretical background of drifting semi-Markov models: \link{dsmmR}.
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/generic_functions.R
 \name{simulate.dsmm}
 \alias{simulate.dsmm}
-\title{Simulate a sequence under a Drifting semi-Markov kernel.}
+\title{Simulate a sequence under a drifting semi-Markov kernel.}
 \usage{
 \method{simulate}{dsmm}(object, nsim = NULL, seed = NULL, seq_length = NULL, klim = 100, ...)
 }
@@ -11,9 +11,12 @@
 \code{dsmm_fit_nonparametric}, \code{dsmm_nonparametric},
 \code{dsmm_fit_parametric} or \code{dsmm_parametric}.}
 
-\item{nsim}{Optional. A positive integer specifying the number of simulations
-that will make up the sequence, with the maximum value being the model size
-that is specified in \code{obj}. The model size is also the default value.}
+\item{nsim}{Optional. An integer specifying the number of simulations to be made
+from the drifting semi-Markov kernel. The maximum value of \code{nsim} is the
+model size which is specified in \code{obj}, which is also the default value.
+We define a special case for \code{nsim = 0}, where only the initial distribution
+is considered and only the simulation of its sojourn time will be made, without
+the next state.}
 
 \item{seed}{Optional. An integer specifying the initialization of the random
 number generator.}
@@ -35,7 +38,7 @@ maximum length of \code{seq_length}.
 }
 \description{
 Generic function that simulates a number of states \code{nsim}
-under the rule of a Drifting semi-Markov kernel, which is retrieved from the
+under the rule of a drifting semi-Markov kernel, which is retrieved from the
 object \code{obj}, which in turn inherits from the S3 class \code{dsmm}.
 }
 \examples{
@@ -51,8 +54,8 @@ obj_model_3 <- fit_dsmm(sequence = seq,
 
 # Using the method `simulate.dsmm()`.
 simulated_seq <- simulate(obj_model_3, seed = 1)
-short_sim <- simulate(obj = obj_model_3, nsim = 50, seed = 1)
-cut_sim <- simulate(obj = obj_model_3, seq_length = 50, seed = 1)
+short_sim <- simulate(obj = obj_model_3, nsim = 10, seed = 1)
+cut_sim <- simulate(obj = obj_model_3, seq_length = 10, seed = 1)
 str(simulated_seq)
 str(short_sim)
 str(cut_sim)
@@ -62,5 +65,5 @@ About random number generation in R: \code{\link[base:RNG]{RNG}}.
 
 Fitting a model through a sequence from this function: \link{fit_dsmm}.
 
-For the theoretical background of Drifting semi-Markov models: \link{dsmmR}.
+For the theoretical background of drifting semi-Markov models: \link{dsmmR}.
 }
