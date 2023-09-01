@@ -5,11 +5,9 @@ README
 <!-- Use `build_readme()` to edit the .md file from the .rmd file -->
 <!-- badges: start -->
 
-[![CRAN
-status](https://www.r-pkg.org/badges/version/dsmmR)](https://CRAN.R-project.org/package=dsmmR)
+[![CRAN status](https://www.r-pkg.org/badges/version/dsmmR)](https://CRAN.R-project.org/package=dsmmR)
 [![R-CMD-check](https://github.com/Mavrogiannis-Ioannis/dsmmR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Mavrogiannis-Ioannis/dsmmR/actions/workflows/R-CMD-check.yaml)
-[![CRAN
-logs](https://cranlogs.r-pkg.org/badges/dsmmR)](https://CRAN.R-project.org/package=dsmmR)
+[![CRAN logs](https://cranlogs.r-pkg.org/badges/dsmmR)](https://CRAN.R-project.org/package=dsmmR)
 
 <!-- badges: end -->
 
@@ -51,14 +49,13 @@ For a detailed introduction in Drifting semi-Markov models consider the
 documentation through `?dsmmR`.
 
 For an extensive description of this approach, consider visiting the
-complete documentation of the package on the [official CRAN
-page](https://CRAN.R-project.org/package=dsmmR).
+complete documentation of the package on the [official CRAN page](https://CRAN.R-project.org/package=dsmmR).
 
 ### Estimation
 
 The easiest way to use **dsmmR** is through the main function
 `dsmm_fit()` in the non-parametric case. This function can estimate a
-Drifting semi-Markov model from a sequence of states (i.e. a character
+Drifting semi-Markov model from a sequence of states (i.e. a character
 vector in R). Example data is included in the package, defined in the
 DNA sequence `lambda`. Also some parameters need to be specified before
 using `dsmm_fit()`, most notably the polynomial *degree* and the model
@@ -138,26 +135,20 @@ For more information, consider the documentation through `?get_kernel`.
 
 ## Further reading
 
-Regarding semi-Markov models, the book [Semi-Markov Chains and Hidden
-Semi-Markov Models toward
-Applications](https://doi.org/10.1007/978-0-387-73173-5) gives a good
+Regarding semi-Markov models, the book [Semi-Markov Chains and Hidden Semi-Markov Models toward Applications](https://doi.org/10.1007/978-0-387-73173-5) gives a good
 overview of the topic and also combines the flexibility of the
 semi-Markov chain with the known advantages of hidden semi-markov
 models.
 
 If you are not familiar with Drifting Markov models, they were first
-introduced in [Drifting Markov models with Polynomial Drift and
-Applications to DNA Sequences](https://doi.org/10.2202/1544-6115.1326),
-while a comprehensive overview is provided in [Reliability and Survival
-Analysis for Drifting Markov Models: Modeling and
-Estimation](https://doi.org/10.1007/s11009-018-9682-8).
+introduced in [Drifting Markov models with Polynomial Drift and Applications to DNA Sequences](https://doi.org/10.2202/1544-6115.1326),
+while a comprehensive overview is provided in [Reliability and Survival Analysis for Drifting Markov Models: Modeling and Estimation](https://doi.org/10.1007/s11009-018-9682-8).
 
 ### Community Guidelines
 
 For third parties wishing to contribute to the software, or to report
 issues or problems about the software, they can do so directly through
-the [development github page of the
-package](https://github.com/Mavrogiannis-Ioannis/dsmmR).
+the [development github page of the package](https://github.com/Mavrogiannis-Ioannis/dsmmR).
 
 ### Notes
 
@@ -174,7 +165,7 @@ If you are in need of support, please contact the maintainer at
 
 Barbu, V. S., Limnios, N. (2008). Semi-Markov Chains and Hidden
 Semi-Markov Models Toward Applications - Their Use in Reliability and
-DNA Analysis. New York: Lecture Notes in Statistics, vol. 191, Springer.
+DNA Analysis. New York: Lecture Notes in Statistics, vol. 191, Springer.
 
 Vergne, N. (2008). Drifting Markov models with Polynomial Drift and
 Applications to DNA Sequences. Statistical Applications in Genetics
@@ -183,3 +174,11 @@ Molecular Biology 7 (1).
 Barbu V. S., Vergne, N. (2019). Reliability and survival analysis for
 drifting Markov models: modelling and estimation. Methodology and
 Computing in Applied Probability, 21(4), 1407-1429.
+
+## Acknowledgements
+
+We acknowledge the DATALAB Project
+<https://lmrs-num.math.cnrs.fr/projet-datalab.html> (financed by the
+European Union with the European Regional Development fund (ERDF) and by
+the Normandy Region) and the HSMM-INCA Project (financed by the French
+Agence Nationale de la Recherche (ANR) under grant ANR-21-CE40-0005).

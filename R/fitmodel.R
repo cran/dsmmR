@@ -658,7 +658,7 @@ fit_dsmm <- function(sequence,
     }
     # f_is_drifting
     if (missing(f_is_drifting)) {
-        stop("\nPlease provide whether the sojourn time distribution",
+        stop("\nPlease provide whether the sojourn time distribution ",
              "f is drifting through the logical parameter `f_is_drifting`.")
     } else if (!is_logical(f_is_drifting)) {
         stop("\nThe logical parameter `f_is_drifting` ",

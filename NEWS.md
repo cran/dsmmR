@@ -5,6 +5,13 @@ editor_options:
     wrap: 72
 ---
 
+# dsmmR 1.0.2
+
+## Documentation
+
+- Updated the `README` and `DESCRIPTION` files with an acknowledgement section.
+
+
 # dsmmR 1.0.1
 
 ## Minor Improvements
@@ -34,7 +41,7 @@ editor_options:
 
 -   Updated the `README` file.
 
-    -   Added high-level documentation of the package 
+    -   Added high-level documentation of the package.
     
     -   Added installation instructions with access to
         the development version of the package through github.
