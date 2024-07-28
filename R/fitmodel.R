@@ -11,7 +11,7 @@
 
 
 #' @title Estimation of a drifting semi-Markov chain
-#' @aliases dsmm_fit dsmm_fit_nonparametric dsmm_fit_parametric
+#' @aliases dsmm_fit
 #' @description Estimation of a drifting semi-Markov chain,
 #' given one sequence of states. This estimation can be parametric
 #' or non-parametric and is available for
@@ -68,7 +68,7 @@
 #'         It is defined similarly to the attribute \code{f_dist}
 #'         in \link{dsmm_parametric}.
 #'     }
-#'
+
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # @param numerical_est Optional. Logical. Specifies if numerical estimation
 #   under constraint should be used instead of LSE.
@@ -341,8 +341,7 @@
 #' @return Returns an object of S3 class \code{(dsmm_fit_nonparametric, dsmm)}
 #' or \code{(dsmm_fit_parametric, dsmm)}. It has the following attributes:
 #' \itemize{
-#' \item \code{dist} : List. Contains 2 or 3 arrays,
-#' \code{estimation}:
+#' \item \code{dist} : List. Contains 2 or 3 arrays.
 #' \itemize{
 #' \item If \code{estimation = "nonparametric"} we have 2 arrays:
 #'   \itemize{
@@ -363,14 +362,14 @@
 #'     depending on whether \eqn{f} is drifting or not.
 #'   }
 #' }
-#' \item \code{seq} : Character vector that contains the
+#' \item \code{emc} : Character vector that contains the
 #'   \strong{embedded Markov chain} \eqn{(J_{t})_{t\in \{0,\dots,n\}}}
 #'   \strong{of the original sequence}.
 #'   It is this attribute of the object that describes the size of the model
 #'   \eqn{n}. Last state is also included, for a total length of \eqn{n+1},
 #'   but it is not used for any calculation.
 #' \item \code{soj_times} : Numerical vector that contains the sojourn times
-#'   spent for each state in \code{seq} before the jump to the next state.
+#'   spent for each state in \code{emc} before the jump to the next state.
 #'   Last state is also included, for a total length of \eqn{n+1},
 #'   but it is not used for any calculation.
 #' \item \code{initial_dist} : Numerical vector that contains an estimation
@@ -390,7 +389,7 @@
 #'   drifting semi-Markov model \eqn{n}, which is equal to the length of the
 #'   embedded Markov chain \eqn{(J_{t})_{t\in \{0,\dots,n\}}},
 #'   minus the last state.
-#'   It has a value of \code{length(seq) - 1}, for \code{seq} as defined above.
+#'   It has a value of \code{length(emc) - 1}, for \code{emc} as defined above.
 #' \item \code{f_is_drifting} : Logical. Passing down from the arguments.
 #' Specifies if \eqn{f} is drifting or not.
 #' \item \code{p_is_drifting} : Logical. Passing down from the arguments.
@@ -457,11 +456,11 @@
 #' states <- sort(unique(sequence))
 #' degree <- 3
 #'
+#'
 #' # ===========================================================================
 #' # Nonparametric Estimation.
 #' # Fitting a random sequence under distributions of unknown shape.
 #' # ===========================================================================
-#'
 #'
 #'
 #' # ---------------------------------------------------------------------------
@@ -493,6 +492,11 @@
 #'            "Dimension of f_drift: (s, s, k_max, d + 1) = (",
 #'            paste(dim(f_drift), collapse = ", "), ").\n"))
 #'
+#' # We can even check the embedded Markov chain and the sojourn times
+#' # directly from the returned object, if we wish to do so.
+#' # This is achieved through the `base::rle()` function, used on `sequence`.
+#' model_emc <- obj_model_1$emc
+#' model_sojourn_times <- obj_model_1$soj_times
 #'
 #' # ---------------------------------------------------------------------------
 #' # Fitting the sequence when p is drifting and f is not drifting - Model 2.
@@ -620,8 +624,8 @@
 #'
 #'
 #' # ===========================================================================
-#' # Some methods for the `dsmm_fit_nonparametric` and
-#' #  `dsmm_fit_parametric` objects.
+#' # `simulate()` and `get_kernel()` can be used for the two objects,
+#' # `dsmm_fit_nonparametric` and `dsmm_fit_parametric`.
 #' # ===========================================================================
 #'
 #'
@@ -666,8 +670,8 @@ fit_dsmm <- function(sequence,
     }
     # p_is_drifting
     if (missing(p_is_drifting)) {
-        stop("\nPlease provide whether the transition matrix p is drifting",
-             " through the logical parameter `p_is_drifting`.")
+        stop("\nPlease provide whether the transition matrix p is drifting,\n",
+             "through the logical parameter `p_is_drifting`.")
     } else if (!is_logical(p_is_drifting)) {
         stop("\nThe logical parameter `p_is_drifting` ",
              "should be either TRUE or FALSE.")
@@ -710,7 +714,7 @@ fit_dsmm <- function(sequence,
     # Sequence
     seq_encoding <- rle(sequence)
     # Model Size = length(sequence) - 1
-    n <- (N <- length(seq <- seq_encoding$values)) - 1
+    n <- (N <- length(emc <- seq_encoding$values)) - 1
     stopifnot(valid_degree(degree = degree, model_size = n))
     # k_max
     k_max <- max(X <- seq_encoding$lengths)
@@ -723,14 +727,14 @@ fit_dsmm <- function(sequence,
     if (initial_dist == "unif") {
         alpha <- rep(1/s, s)
     } else if (initial_dist == "freq") {
-        alpha <- as.vector(table(seq) / N)
+        alpha <- as.vector(table(emc) / N)
     }
     names(alpha) <- states
     # Model
     model <- get_model(p_is_drifting, f_is_drifting)
     # Estimation
     # Get `vector_1_u`, `vector_1_uvl`.
-    id_seq <- seq_states_to_id(seq = seq, states = states)
+    id_seq <- seq_states_to_id(emc = emc, states = states)
     id_states <- seq_along(states)
     vector_1_u <- get_1_u(id_seq, N, n, id_states, s)
     vector_1_uvl <- get_1_uvl(id_seq, N, n, X, k_max, id_states, s)
@@ -771,8 +775,8 @@ fit_dsmm <- function(sequence,
     #     as.list(paste0('l = ', 1:k_max)),
     #     as.list(paste0('u = ', states))
     # )
-    Ji <- aperm(Ji, c(4, 2, 3, 1)) # For clarification.
-    # Normalizing Values.
+    Ji <- aperm(Ji, c(4, 2, 3, 1)) # Getting back to (u, v, l, d + 1)
+    # Normalizing Values over the v and l dimensions.
     Jinormal <- apply(Ji, c(1,4), function(vl_values) {
         if (any(vl_values < 0)) {
             return(get_f(vl_values))
@@ -854,18 +858,18 @@ fit_dsmm <- function(sequence,
                             if (sum_fl != 0) {
                                 stop("For the states u = ", i, ", v = ", j,
                                      " and ", names_i_d(degree, 'f')[d],
-                                     " `f_dist` was defined to be NA, ",
+                                     "\n`f_dist` was defined to be NA, ",
                                      "however we do have occurences in ",
                                      "the sequence, corresponding to ",
-                                     "these states. Therefore, a ",
+                                     "these states.\nTherefore, a ",
                                      "distribution should be chosen.")
                             }
                             return(c(NA, NA))
                         } else if (sum_fl == 0) {
                             stop("For the states u = ", i, ", v = ", j,
                                  " and ", names_i_d(degree, 'f')[d],
-                                 " we have no occurences in the sequence.",
-                                 " Therefore, `f_dist` has to be NA.")
+                                 "\nwe have no occurences in the sequence.",
+                                 "\nTherefore, `f_dist` has to be NA.")
                         }
                         suppressWarnings( # because NA is being generated.
                             parametric_estimation(
@@ -901,8 +905,8 @@ fit_dsmm <- function(sequence,
                         if (sum_fl != 0) {
                             stop("For the states u = ", i, ", v = ", j,
                                  " and ", names_i_d(degree, 'f')[0],
-                                 " `f_dist` was defined to be NA, however",
-                                 " we do have occurences in the sequence.",
+                                 "\n`f_dist` was defined to be NA, however",
+                                 " we do have occurences in the sequence.\n",
                                  " Therefore, a distribution should be",
                                  " chosen.")
                         }
@@ -910,7 +914,7 @@ fit_dsmm <- function(sequence,
                     } else if (sum_fl == 0) {
                         stop("For the states u = ", i, ", v = ", j,
                              " and ", names_i_d(degree, 'f')[0],
-                             " we have no occurences in the sequence.",
+                             " we have no occurences in the sequence.\n",
                              " Therefore, `f_dist` has to be NA.")
                     }
                     suppressWarnings( # Because NAs are being generated.
@@ -946,7 +950,7 @@ fit_dsmm <- function(sequence,
     # Get the `dist` parameter.
     obj <- list(
         "dist" = dist,
-        "seq" = seq,
+        "emc" = emc,
         "soj_times" = X,
         "initial_dist" = alpha,
         "states" = states,

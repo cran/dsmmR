@@ -368,7 +368,7 @@
 #' # Using methods for non-parametric objects.
 #' # ===========================================================================
 #'
-#' kernel_parametric <- get_kernel(obj = obj_nonpar_model_3)
+#' kernel_parametric <- get_kernel(obj_nonpar_model_3)
 #' str(kernel_parametric)
 #'
 #' sim_seq_par <- simulate(obj_nonpar_model_3, nsim = 50)
@@ -399,7 +399,7 @@ nonparametric_dsmm <- function(model_size,
     # Initial Distribution
     if (missing(initial_dist)) {
         stop("\nPlease provide a numeric vector for the ",
-             "initial distribution defined in `initial_dist`.")
+             "initial distribution,\n defined in `initial_dist`.")
     }
     stopifnot(valid_initial_dist(initial_dist, s))
     names(initial_dist) <- states
@@ -419,14 +419,14 @@ nonparametric_dsmm <- function(model_size,
     # f_is_drifting
     if (missing(f_is_drifting)) {
         stop("\nPlease provide whether the sojourn time distribution f is",
-             " drifting through the logical parameter `f_is_drifting`.")
+             " drifting,\nthrough the logical parameter `f_is_drifting`.")
     } else if (!is_logical(f_is_drifting)) {
         stop("\nThe logical parameter `f_is_drifting` should be",
              " either TRUE or FALSE.")
     }
     # p_is_drifting
     if (missing(p_is_drifting)) {
-        stop("\nPlease provide whether the transition matrix p is drifting",
+        stop("\nPlease provide whether the transition matrix p is drifting,\n",
              " through the logical parameter `p_is_drifting`.")
     } else if (!is_logical(p_is_drifting)) {
         stop("\nThe logical parameter `p_is_drifting` should be",

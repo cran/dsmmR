@@ -723,13 +723,16 @@ parametric_dsmm <- function(model_size,
     model <- get_model(p_is_drifting = p_is_drifting,
                        f_is_drifting = f_is_drifting)
     if (model == "Model_1") {
-        dist <- list('p_drift' = p_dist, 'f_drift_parametric' = f_dist,
+        dist <- list('p_drift' = p_dist,
+                     'f_drift_parametric' = f_dist,
                      'f_drift_parameters' = f_dist_pars)
     } else if (model == "Model_2") {
-        dist <- list('p_drift' = p_dist, 'f_notdrift_parametric' = f_dist,
+        dist <- list('p_drift' = p_dist,
+                     'f_notdrift_parametric' = f_dist,
                      'f_notdrift_parameters' = f_dist_pars)
     } else if (model == "Model_3") {
-        dist <- list('p_notdrift' = p_dist, 'f_drift_parametric' = f_dist,
+        dist <- list('p_notdrift' = p_dist,
+                     'f_drift_parametric' = f_dist,
                      'f_drift_parameters' = f_dist_pars)
     }
     # Assign the values to the object.

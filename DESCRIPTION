@@ -1,18 +1,19 @@
 Type: Package
 Package: dsmmR
 Title: Estimation and Simulation of Drifting Semi-Markov Models
-Version: 1.0.2
-Date: 2023-08-31
+Version: 1.0.5
+Date: 2024-07-28
 Authors@R: c(
     person("Vlad Stefan", "Barbu",
            role = c("aut"),
            comment = c(ORCID = "0000-0002-0840-016X")),
     person("Ioannis", "Mavrogiannis", 
         role = c("aut", "cre"),
-        email = "mavrogiannis.ioa@gmail.com"),
+        email = "mavrogiannis.ioa@gmail.com", 
+        comment = c(ORCID = "0000-0002-2948-0648")),
     person("Nicolas", "Vergne",
            role = c("aut"))
-           ) 
+           )
 Description: Performs parametric and non-parametric estimation and simulation of 
     drifting semi-Markov processes. The definition of parametric and non-parametric
     model specifications is also possible. Furthermore, three different types of
@@ -35,16 +36,20 @@ Description: Performs parametric and non-parametric estimation and simulation of
     the Normandy Region) and the HSMM-INCA Project (financed by the French
     Agence Nationale de la Recherche (ANR) under grant ANR-21-CE40-0005).
 License: GPL
+URL: https://github.com/Mavrogiannis-Ioannis/dsmmR
+BugReports: https://github.com/Mavrogiannis-Ioannis/dsmmR/issues
 Imports: DiscreteWeibull
-Suggests: utils, knitr, rmarkdown
+Suggests: utils, knitr, rmarkdown, testthat (>= 3.0.0)
 Encoding: UTF-8
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 NeedsCompilation: yes
+Depends: R (>= 3.5.0)
+Config/testthat/edition: 3
+Packaged: 2024-07-27 23:47:07 UTC; ioann
 Author: Vlad Stefan Barbu [aut] (<https://orcid.org/0000-0002-0840-016X>),
-  Ioannis Mavrogiannis [aut, cre],
+  Ioannis Mavrogiannis [aut, cre]
+    (<https://orcid.org/0000-0002-2948-0648>),
   Nicolas Vergne [aut]
 Maintainer: Ioannis Mavrogiannis <mavrogiannis.ioa@gmail.com>
-Depends: R (>= 2.10)
-Packaged: 2023-09-01 09:12:50 UTC; ioann
 Repository: CRAN
-Date/Publication: 2023-09-01 11:00:05 UTC
+Date/Publication: 2024-07-28 00:20:01 UTC

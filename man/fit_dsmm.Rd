@@ -3,8 +3,6 @@
 \name{fit_dsmm}
 \alias{fit_dsmm}
 \alias{dsmm_fit}
-\alias{dsmm_fit_nonparametric}
-\alias{dsmm_fit_parametric}
 \title{Estimation of a drifting semi-Markov chain}
 \usage{
 fit_dsmm(
@@ -82,8 +80,7 @@ estimation will be nonparametric or parametric.
 Returns an object of S3 class \code{(dsmm_fit_nonparametric, dsmm)}
 or \code{(dsmm_fit_parametric, dsmm)}. It has the following attributes:
 \itemize{
-\item \code{dist} : List. Contains 2 or 3 arrays,
-\code{estimation}:
+\item \code{dist} : List. Contains 2 or 3 arrays.
 \itemize{
 \item If \code{estimation = "nonparametric"} we have 2 arrays:
   \itemize{
@@ -104,14 +101,14 @@ or \code{(dsmm_fit_parametric, dsmm)}. It has the following attributes:
     depending on whether \eqn{f} is drifting or not.
   }
 }
-\item \code{seq} : Character vector that contains the
+\item \code{emc} : Character vector that contains the
   \strong{embedded Markov chain} \eqn{(J_{t})_{t\in \{0,\dots,n\}}}
   \strong{of the original sequence}.
   It is this attribute of the object that describes the size of the model
   \eqn{n}. Last state is also included, for a total length of \eqn{n+1},
   but it is not used for any calculation.
 \item \code{soj_times} : Numerical vector that contains the sojourn times
-  spent for each state in \code{seq} before the jump to the next state.
+  spent for each state in \code{emc} before the jump to the next state.
   Last state is also included, for a total length of \eqn{n+1},
   but it is not used for any calculation.
 \item \code{initial_dist} : Numerical vector that contains an estimation
@@ -131,7 +128,7 @@ vector given in the attribute \code{states}, which is equal to \eqn{s = |E|}.
   drifting semi-Markov model \eqn{n}, which is equal to the length of the
   embedded Markov chain \eqn{(J_{t})_{t\in \{0,\dots,n\}}},
   minus the last state.
-  It has a value of \code{length(seq) - 1}, for \code{seq} as defined above.
+  It has a value of \code{length(emc) - 1}, for \code{emc} as defined above.
 \item \code{f_is_drifting} : Logical. Passing down from the arguments.
 Specifies if \eqn{f} is drifting or not.
 \item \code{p_is_drifting} : Logical. Passing down from the arguments.
@@ -402,11 +399,11 @@ sequence <- create_sequence("DNA", len = 2000, seed = 1)
 states <- sort(unique(sequence))
 degree <- 3
 
+
 # ===========================================================================
 # Nonparametric Estimation.
 # Fitting a random sequence under distributions of unknown shape.
 # ===========================================================================
-
 
 
 # ---------------------------------------------------------------------------
@@ -438,6 +435,11 @@ cat(paste0("Dimension of p_drift: (s, s, d + 1) = (",
            "Dimension of f_drift: (s, s, k_max, d + 1) = (",
            paste(dim(f_drift), collapse = ", "), ").\n"))
 
+# We can even check the embedded Markov chain and the sojourn times
+# directly from the returned object, if we wish to do so.
+# This is achieved through the `base::rle()` function, used on `sequence`.
+model_emc <- obj_model_1$emc
+model_sojourn_times <- obj_model_1$soj_times
 
 # ---------------------------------------------------------------------------
 # Fitting the sequence when p is drifting and f is not drifting - Model 2.
@@ -565,8 +567,8 @@ cat("Not-drifting parameters for passing from ",
 
 
 # ===========================================================================
-# Some methods for the `dsmm_fit_nonparametric` and
-#  `dsmm_fit_parametric` objects.
+# `simulate()` and `get_kernel()` can be used for the two objects,
+# `dsmm_fit_nonparametric` and `dsmm_fit_parametric`.
 # ===========================================================================
 
 

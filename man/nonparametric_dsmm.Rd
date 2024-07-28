@@ -367,7 +367,7 @@ f_drift
 # Using methods for non-parametric objects.
 # ===========================================================================
 
-kernel_parametric <- get_kernel(obj = obj_nonpar_model_3)
+kernel_parametric <- get_kernel(obj_nonpar_model_3)
 str(kernel_parametric)
 
 sim_seq_par <- simulate(obj_nonpar_model_3, nsim = 50)

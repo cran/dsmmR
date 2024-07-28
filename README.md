@@ -8,8 +8,13 @@ README
 [![CRAN status](https://www.r-pkg.org/badges/version/dsmmR)](https://CRAN.R-project.org/package=dsmmR)
 [![R-CMD-check](https://github.com/Mavrogiannis-Ioannis/dsmmR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Mavrogiannis-Ioannis/dsmmR/actions/workflows/R-CMD-check.yaml)
 [![CRAN logs](https://cranlogs.r-pkg.org/badges/dsmmR)](https://CRAN.R-project.org/package=dsmmR)
-
+[![Codecov test coverage](https://codecov.io/gh/Mavrogiannis-Ioannis/dsmmR/branch/master/graph/badge.svg)](https://app.codecov.io/gh/Mavrogiannis-Ioannis/dsmmR?branch=master)
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](https://usethis.r-lib.org/CODE_OF_CONDUCT.html)
 <!-- badges: end -->
+
+# Developer Version
+
+## 1.0.5
 
 # dsmmR
 
@@ -79,9 +84,9 @@ degree <- 1 # we define a linear evolution in time (state jumps of the embedded 
 # Defining the model 
 f_is_drifting <- TRUE # sojourn time distributions are drifting in time (state jumps of the EMC)
 p_is_drifting <- FALSE # transition matrices are not drifting in time (state jumps of the EMC)
-# When both f and p are drifting, we have Model 1.
+# When f is drifting and p is not drifting, we have Model 3.
 
-# Fitting the Drifting semi-Markov model
+# Fitting the drifting semi-Markov model on the sequence.
 fitted_model <- fit_dsmm(sequence = sequence,
                          states = states,
                          degree = degree,
@@ -91,16 +96,6 @@ fitted_model <- fit_dsmm(sequence = sequence,
 
 For more details about the estimation, consider viewing the extended
 documentation through `?fit_dsmm`.
-
-### Defining drifting semi-Markov models
-
-When defining a DSMM object we need to input parameters like the
-polynomial degree, the state space, the DSMM size (length of the
-embedded Markov chain), the sojourn times *f*, the transition matrices
-*p* and more.
-
-For more information, consider the documentation through
-`?parametric_dsmm` and `?nonparametric_dsmm`.
 
 ### Simulation
 
@@ -120,9 +115,9 @@ For more information, consider the documentation through
 
 ### Drifting semi-Markov kernel
 
-In order to account for the large dimension of the DSM kernel, a
-separate function was necessary. You can obtain the DSM kernel through
-the command:
+In order to account for the dimension of the DSM kernel, a separate
+function was necessary. You can obtain the DSM kernel through the
+command:
 
 ``` r
 kernel <- get_kernel(fitted_model)
@@ -132,6 +127,172 @@ The dimensionality of the DSM kernel can be reduced further through the
 attributes of the function.
 
 For more information, consider the documentation through `?get_kernel`.
+
+### Defining drifting semi-Markov models
+
+We can put together all the previous concepts in the showcase of
+parametric estimation. First, we will define the drifting transition
+matrices and the drifting sojourn time distributions. Then, we will
+create a `dsmm_parametric` object, we will simulate a sequence from it
+and then finally we will estimate a drifting semi-Markov model from that
+simulated sequence.
+
+For more information, consider the documentation through
+`?parametric_dsmm` and `?nonparametric_dsmm`.
+
+First of all we load the package,
+
+``` r
+library(dsmmR)
+```
+
+and then we define the states and we set the degree equal to 1.
+
+``` r
+states <- c("a", "b", "c")
+s <- length(states)
+degree <- 1
+```
+
+Since degree is equal to 1, we then define the 2 drifting transition
+matrices:
+
+``` r
+p_dist_1 <- matrix(c(0,   0.4,  0.6,
+                     0.5, 0,    0.5,
+                     0.3, 0.7,  0   ), ncol = s, byrow = TRUE)
+p_dist_2 <- matrix(c(0,   0.55, 0.45,
+                     0.25, 0,   0.75,
+                     0.5, 0.5,  0   ), ncol = s, byrow = TRUE)
+p_dist <- array(c(p_dist_1, p_dist_2), dim = c(s, s, degree + 1))
+```
+
+Let us also consider the case where only the parameters of the
+distributions modeling the sojourn times are drifting across the
+sequence. Note that distributions like the Negative Binomial and the
+Discrete Weibull require two parameters, which we define in two matrices
+for each distribution.
+
+``` r
+f_dist_1 <- matrix(c(NA,   "nbinom",   "unif",
+                   "geom",  NA,        "pois",
+                   "pois", "dweibull",  NA   ), nrow = s, ncol = s, byrow = TRUE)
+f_dist_1_pars_1 <- matrix(c(NA,  4,   3,
+                            0.7, NA,  5,
+                            3,   0.6, NA), nrow = s, ncol = s, byrow = TRUE)
+f_dist_1_pars_2 <- matrix(c(NA,  0.5, NA,
+                            NA,  NA,  NA,
+                            NA,  0.8, NA), nrow = s, ncol = s, byrow = TRUE)
+f_dist_2 <- f_dist_1 
+f_dist_2_pars_1 <- matrix(c(NA,  3,   5,
+                            0.3, NA,  2,
+                            5,   0.3, NA), nrow = s, ncol = s, byrow = TRUE)
+f_dist_2_pars_2 <- matrix(c(NA,  0.4, NA,
+                            NA,  NA,  NA,
+                            NA,  0.5, NA), nrow = s, ncol = s, byrow = TRUE)
+
+f_dist <- array(c(f_dist_1, f_dist_2), dim = c(s, s, degree + 1))
+f_dist_pars <- array(c(f_dist_1_pars_1, f_dist_1_pars_2,
+                       f_dist_2_pars_1, f_dist_2_pars_2), 
+                     dim = c(s, s, 2, degree + 1))
+```
+
+Then, defining a `dsmm_parametric` object is done simply through the
+function `parametric_dsmm()`:
+
+``` r
+dsmm_model <- parametric_dsmm(
+    model_size = 10000,
+    states = states,
+    initial_dist = c(0.6, 0.3, 0.1),
+    degree = degree,
+    p_dist = p_dist,
+    f_dist = f_dist,
+    f_dist_pars = f_dist_pars,
+    p_is_drifting = TRUE,
+    f_is_drifting = TRUE
+)
+```
+
+We can then simulate a sequence from this parametric object like-so:
+
+``` r
+sim_seq <- simulate(dsmm_model, klim = 30, seed = 1)
+```
+
+To fit this sequence with a drifting semi-Markov model, one can use:
+
+``` r
+fitted_model <- fit_dsmm(sequence = sim_seq,
+                         states = states,
+                         degree = degree,
+                         f_is_drifting = TRUE,
+                         p_is_drifting = TRUE,
+                         estimation = 'parametric',
+                         f_dist = f_dist)
+```
+
+Finally, the drifting transition matrix is estimated as:
+
+``` r
+print(fitted_model$dist$p_drift, digits = 2)
+```
+
+with output:
+
+``` r
+, , p_0
+
+     a    b    c
+a 0.00 0.40 0.60
+b 0.51 0.00 0.49
+c 0.27 0.73 0.00
+
+, , p_1
+
+     a    b    c
+a 0.00 0.54 0.46
+b 0.23 0.00 0.77
+c 0.51 0.49 0.00
+```
+
+and the parameters for the drifting sojourn time distributions are:
+
+``` r
+print(fitted_model$dist$f_drift_parameters, digits = 2)
+```
+
+with output:
+
+``` r
+, , 1, fpars_0
+
+     a    b   c
+a   NA 3.66 3.0
+b 0.65   NA 4.8
+c 3.09 0.62  NA
+
+, , 2, fpars_0
+
+   a    b  c
+a NA 0.46 NA
+b NA   NA NA
+c NA 0.84 NA
+
+, , 1, fpars_1
+
+     a    b   c
+a   NA 2.74 5.0
+b 0.31   NA 2.1
+c 5.02 0.29  NA
+
+, , 2, fpars_1
+
+   a    b  c
+a NA 0.38 NA
+b NA   NA NA
+c NA 0.50 NA
+```
 
 ## Further reading
 

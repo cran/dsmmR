@@ -53,13 +53,12 @@ However, this will lead to better estimations through \code{fit_dsmm()}.
 An array with dimensions of
 \eqn{s \times s \times k_{max} \times (n + 1)}, giving the
 value of the drifting semi-Markov kernel \eqn{q_{\frac{t}{n}}(u,v,l)} for
-the corresponding \eqn{(u,v,l,t)}. If any of \eqn{u,v,l} or \eqn{t} were
-specified, their dimension in the array becomes 1.
+the corresponding \eqn{(u,v,l,t)}. If any of \eqn{u,v,l} or \eqn{t} are
+specified, we obtain the element of the array for their given value.
 }
 \description{
 This is a generic method that computes and returns the drifting
-semi-Markov kernel as a numerical array of dimensions
-\eqn{s \times s \times k_{max} \times (n + 1)}.
+semi-Markov kernel.
 }
 \details{
 The drifting semi-Markov kernel is given as the probability that,
@@ -138,9 +137,9 @@ Thus, the drifting semi-Markov kernel will be equal to:
 \examples{
 # Setup.
 states <- c("Rouen", "Bucharest", "Samos", "Aigio", "Marseille")
-seq <- create_sequence(states, probs = c(0.3, 0.1, 0.1, 0.3, 0.2))
+emc <- create_sequence(states, probs = c(0.3, 0.1, 0.1, 0.3, 0.2))
 obj_model_2 <- fit_dsmm(
-    sequence = seq,
+    sequence = emc,
     states = states,
     degree = 3,
     f_is_drifting = FALSE,

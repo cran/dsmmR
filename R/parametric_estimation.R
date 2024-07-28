@@ -36,12 +36,12 @@ parametric_estimation <- function(lprobs, dist, kmax, i, j, d, degree, states) {
         expectationsquared <- expectation**2
         variance <- expectationx2 - expectationsquared
         if (expectation >= variance) {
-            stop("The negative binomial distribution is not appropriate ",
-                 "for modeling the conditional sojourn time distribution ",
-                 "associated to the current state u = ", states[i],
-                 ", the next state v = ", states[j], " and the distribution ",
+            stop("The Negative Binomial distribution is not appropriate\n",
+                 "for modeling the conditional sojourn time distribution\n",
+                 "associated with:\n the current state u = ", states[i],
+                 ",\n the next state v = ", states[j], "\n and the distribution ",
                  names_i_d(degree, 'f')[d],
-                 ", because variance = ", variance,
+                 ",\nbecause variance = ", variance,
                  " >= ", expectation, " = expectation.")
         }
         phat <- expectation / variance
@@ -49,17 +49,17 @@ parametric_estimation <- function(lprobs, dist, kmax, i, j, d, degree, states) {
         return(c(alphahat, phat))
     } else if (dist == 'dweibull') {
         if (length(unique(lprobs)) == 1) {
-            stop("The Discrete Weibull is not appropriate for modeling",
-                 " the conditional sojourn time distribution",
-                 " describing the previous state u = ", states[i],
-                 ", the next state v = ", states[j],
-                 " for the sojourn time distribution ",
-                 names_i_d(degree, 'f')[d], ", since the estimation of",
-                 " the second parameter beta is not possible.\n",
-                 "This happens because we only have 1 non-negative value",
-                 " and the estimation of beta requires at least 2 non-negative",
-                 " values, which makes the estimation of beta impossible in",
-                 " this case")
+            stop("The Discrete Weibull is not appropriate for modeling\n",
+                 "the conditional sojourn time distribution",
+                 " describing:\n the previous state u = ", states[i],
+                 ",\n the next state v = ", states[j],
+                 "\n for the sojourn time distribution ",
+                 names_i_d(degree, 'f')[d], ",\nsince the estimation of",
+                 " the second parameter beta is not possible.\n\n",
+                 "This happens because we only have 1 non-negative value,\n",
+                 "and the estimation of beta requires at least 2 non-negative ",
+                 "values,\nwhich makes the estimation of beta impossible in",
+                 " this case.")
         }
         qhat <- 1 - lprobs[1]
         cumsumf <- 1 - cumsum(lprobs)
@@ -67,15 +67,15 @@ parametric_estimation <- function(lprobs, dist, kmax, i, j, d, degree, states) {
             log(log(cumsumf[i], base = qhat), base = i))
         betahat <- mean(beta_i[is.finite(beta_i)])
         if (is.nan(betahat)) {
-            stop("The Discrete Weibull is not appropriate for modeling",
-                 " the conditional sojourn time distribution",
-                 " describing the previous state u = ", states[i],
-                 ", the next state v = ", states[j],
-                 " for the sojourn time distribution ",
-                 names_i_d(degree, 'f')[d], ",  the estimation of",
-                 " the second parameter beta is not possible.\n ",
+            stop("The Discrete Weibull is not appropriate for modeling\n",
+                 "the conditional sojourn time distribution",
+                 " describing\n the previous state u = ", states[i],
+                 ",\n the next state v = ", states[j],
+                 "\n for the sojourn time distribution ",
+                 names_i_d(degree, 'f')[d], ",\n since the estimation of",
+                 " the second parameter beta is not possible.\n\n",
                  "This behaviour is perhaps accounted to the fact that",
-                 " beta > 1, which is generally hard to estimate.")
+                 " beta > 1,\nwhich is generally hard to estimate.")
         }
         return(c(qhat, betahat))
     }
