@@ -1,8 +1,8 @@
 Type: Package
 Package: dsmmR
 Title: Estimation and Simulation of Drifting Semi-Markov Models
-Version: 1.0.5
-Date: 2024-07-28
+Version: 1.0.7
+Date: 2025-07-08
 Authors@R: c(
     person("Vlad Stefan", "Barbu",
            role = c("aut"),
@@ -41,15 +41,16 @@ BugReports: https://github.com/Mavrogiannis-Ioannis/dsmmR/issues
 Imports: DiscreteWeibull
 Suggests: utils, knitr, rmarkdown, testthat (>= 3.0.0)
 Encoding: UTF-8
-RoxygenNote: 7.3.1
-NeedsCompilation: yes
+RoxygenNote: 7.3.2
 Depends: R (>= 3.5.0)
 Config/testthat/edition: 3
-Packaged: 2024-07-27 23:47:07 UTC; ioann
-Author: Vlad Stefan Barbu [aut] (<https://orcid.org/0000-0002-0840-016X>),
-  Ioannis Mavrogiannis [aut, cre]
-    (<https://orcid.org/0000-0002-2948-0648>),
+NeedsCompilation: no
+Packaged: 2025-07-08 08:19:13 UTC; ioann
+Author: Vlad Stefan Barbu [aut] (ORCID:
+    <https://orcid.org/0000-0002-0840-016X>),
+  Ioannis Mavrogiannis [aut, cre] (ORCID:
+    <https://orcid.org/0000-0002-2948-0648>),
   Nicolas Vergne [aut]
 Maintainer: Ioannis Mavrogiannis <mavrogiannis.ioa@gmail.com>
 Repository: CRAN
-Date/Publication: 2024-07-28 00:20:01 UTC
+Date/Publication: 2025-07-08 08:30:02 UTC

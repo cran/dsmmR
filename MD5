@@ -1,6 +1,6 @@
-c681bbe1123699f313163b519fd50585 *DESCRIPTION
+05b2133b2deecbd66e276291eba95328 *DESCRIPTION
 39cf72687eae7532511dd7c7022abcd4 *NAMESPACE
-5dfc5c623ff498bdd9ffae5202c9f3e8 *NEWS.md
+b87c929d53ff9b593c43f2014f9eedc3 *NEWS.md
 5c4125b9c93b1eeffb1741a22d5fae90 *R/data.R
 e833cd3dfecc177117dfc6ddeb410f3d *R/dsmmR-package.R
 061360f21b668dbb12096311e88b4bde *R/fitmodel.R
@@ -9,7 +9,7 @@ e833cd3dfecc177117dfc6ddeb410f3d *R/dsmmR-package.R
 a407a3b19c26e4cb2a64928bf574c888 *R/parametric.R
 513316adc1bdc9b09249213a0c13750c *R/parametric_estimation.R
 7878ab9490dae556a7b35c46a50a43cb *R/utils.R
-47fb5d844fb10854134713f1e017d773 *README.md
+991f1cfadd26e3cdd94d9c7b3b23154f *README.md
 a20f677f6e1c3147e91857463aaf3533 *data/lambda.rda
 75874686fdc2df0186433bd3f3326982 *man/create_sequence.Rd
 1d15758f7e55a5076ec59893f5edf154 *man/dsmmR-package.Rd

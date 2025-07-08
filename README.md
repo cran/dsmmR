@@ -5,16 +5,17 @@ README
 <!-- Use `build_readme()` to edit the .md file from the .rmd file -->
 <!-- badges: start -->
 
-[![CRAN status](https://www.r-pkg.org/badges/version/dsmmR)](https://CRAN.R-project.org/package=dsmmR)
+[![CRANstatus](https://www.r-pkg.org/badges/version/dsmmR)](https://CRAN.R-project.org/package=dsmmR)
 [![R-CMD-check](https://github.com/Mavrogiannis-Ioannis/dsmmR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Mavrogiannis-Ioannis/dsmmR/actions/workflows/R-CMD-check.yaml)
-[![CRAN logs](https://cranlogs.r-pkg.org/badges/dsmmR)](https://CRAN.R-project.org/package=dsmmR)
+[![CRANlogs](https://cranlogs.r-pkg.org/badges/dsmmR)](https://CRAN.R-project.org/package=dsmmR)
 [![Codecov test coverage](https://codecov.io/gh/Mavrogiannis-Ioannis/dsmmR/branch/master/graph/badge.svg)](https://app.codecov.io/gh/Mavrogiannis-Ioannis/dsmmR?branch=master)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](https://usethis.r-lib.org/CODE_OF_CONDUCT.html)
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.05572/status.svg)](https://doi.org/10.21105/joss.05572)
 <!-- badges: end -->
 
 # Developer Version
 
-## 1.0.5
+## 1.0.6
 
 # dsmmR
 
@@ -296,8 +297,7 @@ c NA 0.50 NA
 
 ## Further reading
 
-Regarding semi-Markov models, the book [Semi-Markov Chains and Hidden Semi-Markov Models toward Applications](https://doi.org/10.1007/978-0-387-73173-5) gives a good
-overview of the topic and also combines the flexibility of the
+Regarding semi-Markov models, the book [Semi-Markov Chains and Hidden Semi-Markov Models toward Applications](https://doi.org/10.1007/978-0-387-73173-5) gives a good overview of the topic and also combines the flexibility of the
 semi-Markov chain with the known advantages of hidden semi-markov
 models.
 
@@ -338,7 +338,14 @@ Computing in Applied Probability, 21(4), 1407-1429.
 
 ## Acknowledgements
 
-We acknowledge the DATALAB Project
+The author and developer Mavrogiannis Ioannis would like to acknowledge
+that this research work was primarily conducted while he was affiliated
+with the LMRS laboratory (UMR CNRS 6085, University of Rouen Normandy,
+France), while he is currently affiliated with the M2P2 laboratory
+(Aix-Marseille Université, CNRS, Centrale Marseille, M2P2 UMR 7340,
+Marseille, France).
+
+The authors acknowledge the DATALAB Project
 <https://lmrs-num.math.cnrs.fr/projet-datalab.html> (financed by the
 European Union with the European Regional Development fund (ERDF) and by
 the Normandy Region) and the HSMM-INCA Project (financed by the French
